@@ -9,3 +9,9 @@ export function categorizarDuracion(duracion) {
     return 'Partida larga'
   }
 }
+
+// 'Todas' no filtra
+export function filtrarPorDuracion(juegos, categoria) {
+  if (categoria === 'Todas') return juegos
+  return juegos.filter((juego) => categorizarDuracion(juego.duracion) === categoria)
+}
