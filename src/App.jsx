@@ -1,7 +1,6 @@
 // La cabecera de la referencia (index.html) y, debajo, la pantalla.
 // La barra de pestañas llega en el Sprint 2, con React Router.
-import FichaJuego from './components/FichaJuego.jsx'
-import { JUEGOS } from './data/juegos.js'
+import Inicio from './pages/Inicio.jsx'
 
 export default function App() {
   return (
@@ -10,8 +9,7 @@ export default function App() {
         <h1>Ludoteca</h1>
       </header>
       <main>
-        {/* Provisional: una tarjeta para comprobar que se ve como en la referencia */}
-        <FichaJuego juego={JUEGOS[0]} />
+        <Inicio />
       </main>
     </>
   )
