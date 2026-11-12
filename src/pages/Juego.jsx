@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import { useParams } from 'react-router'
 import { useJuego } from '../hooks/useJuego.js'
 import Portada from '../components/Portada.jsx'
@@ -14,6 +15,16 @@ export default function Juego() {
   const { id } = useParams()
   // La carga del juego, en un custom hook
   const { juego, cargando, error, reintentar } = useJuego(id)
+  // useRef: una caja que guarda el título entre renders, sin volver a
+  // pintar. React la rellena al poner ref={titulo} en el h2
+  const titulo = useRef(null)
+
+  // Con <Link> no se carga una página nueva, así que el navegador no
+  // mueve el foco: al llegar el juego, se lleva a su nombre (quien usa
+  // un lector de pantalla oye dónde está)
+  useEffect(() => {
+    if (juego) titulo.current.focus()
+  }, [juego])
 
   if (cargando) return <Cargando texto="Cargando el juego…" />
   if (error) return <ErrorCarga mensaje={error} onReintentar={reintentar} />
@@ -24,7 +35,9 @@ export default function Juego() {
       <div className="card">
         <Portada juego={juego} />
       </div>
-      <h2>{nombre}</h2>
+      <h2 ref={titulo} tabIndex={-1}>
+        {nombre}
+      </h2>
       <div className="row">
         <EtiquetaDuracion texto={categorizarDuracion(juego.duracion)} />
         <span className="tag">{categoria}</span>
