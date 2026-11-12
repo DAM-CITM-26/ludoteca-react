@@ -36,6 +36,8 @@ export default function Destacado({ juegos }) {
     return () => clearInterval(id)
   }, [juegos.length])
 
+  // Sin novedades no hay nada que destacar (y juegos.length sería 0)
+  if (juegos.length === 0) return null
   const juego = juegos[indice]
   return (
     <article className="destacado">
