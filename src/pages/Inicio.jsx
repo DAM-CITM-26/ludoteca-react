@@ -3,6 +3,7 @@ import Carrusel from '../components/Carrusel.jsx'
 import Destacado from '../components/Destacado.jsx'
 import ListaJuegos from '../components/ListaJuegos.jsx'
 import Chips from '../components/Chips.jsx'
+import Buscador from '../components/Buscador.jsx'
 import Cargando from '../components/Cargando.jsx'
 import ErrorCarga from '../components/ErrorCarga.jsx'
 import { useJuegos } from '../hooks/useJuegos.js'
@@ -30,6 +31,10 @@ export default function Inicio() {
 
   return (
     <>
+      <section className="seccion">
+        <h2>Buscar</h2>
+        <Buscador />
+      </section>
       <section className="seccion">
         <h2>Juego del momento</h2>
         <Destacado juegos={novedades} />
