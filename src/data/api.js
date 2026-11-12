@@ -51,3 +51,15 @@ export async function pedirJuegos() {
   const datos = await respuesta.json()
   return datos.results.map(aJuego)
 }
+
+// Un juego por su id. Si no existe, la API responde 404.
+export async function pedirJuego(id) {
+  const respuesta = await pedir(`/games/${id}`)
+  if (respuesta.status === 404) {
+    throw new Error('ese juego no existe')
+  }
+  if (!respuesta.ok) {
+    throw new Error(`La API respondió ${respuesta.status}`)
+  }
+  return aJuego(await respuesta.json())
+}
