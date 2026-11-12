@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react'
 import { buscarJuegos } from '../data/api.js'
 
+// Cuánto se espera sin escribir antes de preguntar a la API
+const ESPERA = 400
+
 // Custom hook: la búsqueda en la API, con sus tres estados.
 // Recibe el texto; Buscador solo tiene el campo y pinta.
 export function useBusqueda(texto) {
@@ -28,9 +31,13 @@ export function useBusqueda(texto) {
         if (!cancelado) setCargando(false)
       }
     }
-    buscar()
+    // Debounce: no se pide a cada letra. Se espera a que se deje de
+    // escribir; cada letra nueva ejecuta la limpieza, que cancela la
+    // espera de la anterior
+    const espera = setTimeout(buscar, ESPERA)
     return () => {
       cancelado = true
+      clearTimeout(espera)
     }
   }, [texto, intento])
 
