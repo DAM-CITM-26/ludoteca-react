@@ -27,3 +27,15 @@ Piezas nuevas que sincronizan la app con algo de fuera de React.
 | `AvisoConexion` | `src/components/AvisoConexion.jsx` | Molécula | **Estado:** si hay conexión. **Efecto:** escucha `online` y `offline` en `window`; la limpieza quita los listeners |
 | `BotonArriba` | `src/components/BotonArriba.jsx` | Átomo | **Estado:** si se ve. **Efecto:** escucha `scroll` en `window`; la limpieza quita el listener |
 | — (en `Inicio`) | `src/pages/Inicio.jsx` | Pantalla | **Efecto:** `document.title` con la duración elegida; dependencias `[duracion, filtrados.length]` |
+
+## Sprint 2 · Clase 20 (la API)
+
+| Componente o fichero | Fichero | Nivel | Estado, efecto y datos |
+|---|---|---|---|
+| `pedirJuegos`, `pedirJuego`, `buscarJuegos` | `src/data/api.js` | — | El único fichero con `fetch`. `aJuego` traduce la respuesta al modelo de `docs/datos.md` |
+| `Cargando` | `src/components/Cargando.jsx` | Átomo | Recibe `texto` |
+| `ErrorCarga` | `src/components/ErrorCarga.jsx` | Molécula | Recibe `mensaje` y `onReintentar` |
+| `Buscador` | `src/components/Buscador.jsx` | Organismo | **Estado:** `texto`. La búsqueda, con `useBusqueda(texto)` |
+| `useBusqueda` | `src/hooks/useBusqueda.js` | Custom hook | **Estado:** `resultados`, `cargando`, `error`, `intento`. **Efecto:** `buscarJuegos(texto)` con `[texto, intento]` y la bandera `cancelado`, tras 400 ms sin escribir (debounce) |
+| `useJuegos` | `src/hooks/useJuegos.js` | Custom hook | **Estado:** `juegos`, `cargando`, `error`, `intento`. **Efecto:** `pedirJuegos()` con `[intento]`. Devuelve `{ juegos, cargando, error, reintentar }` |
+| — (en `Inicio`) | `src/pages/Inicio.jsx` | Pantalla | La carga, con `useJuegos()`: Inicio solo pinta |
