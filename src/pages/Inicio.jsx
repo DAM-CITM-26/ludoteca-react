@@ -5,42 +5,15 @@ import ListaJuegos from '../components/ListaJuegos.jsx'
 import Chips from '../components/Chips.jsx'
 import Cargando from '../components/Cargando.jsx'
 import ErrorCarga from '../components/ErrorCarga.jsx'
-import { pedirJuegos } from '../data/api.js'
+import { useJuegos } from '../hooks/useJuegos.js'
 import { filtrarPorDuracion } from '../utils/juegos.js'
 
 const DURACIONES = ['Todas', 'Partida rápida', 'Partida media', 'Partida larga']
 
 export default function Inicio() {
-  // Los tres estados de la carga, y los datos cuando llegan
-  const [juegos, setJuegos] = useState([])
-  const [cargando, setCargando] = useState(true)
-  const [error, setError] = useState(null)
-  // Cada clic en «Reintentar» suma uno, y el efecto vuelve a pedir los
-  // datos
-  const [intento, setIntento] = useState(0)
+  // La carga, en un custom hook: Inicio solo pinta
+  const { juegos, cargando, error, reintentar } = useJuegos()
   const [duracion, setDuracion] = useState('Todas')
-
-  useEffect(() => {
-    let cancelado = false
-    async function cargar() {
-      setCargando(true)
-      setError(null)
-      try {
-        const lista = await pedirJuegos()
-        if (!cancelado) setJuegos(lista)
-      } catch (e) {
-        if (!cancelado) setError(e.message)
-      } finally {
-        if (!cancelado) setCargando(false)
-      }
-    }
-    cargar()
-    // Limpieza: si la pantalla se va antes de que llegue la respuesta,
-    // se ignora
-    return () => {
-      cancelado = true
-    }
-  }, [intento])
 
   const novedades = juegos.filter((juego) => juego.novedad)
   const filtrados = filtrarPorDuracion(juegos, duracion)
@@ -53,14 +26,7 @@ export default function Inicio() {
   }, [duracion, filtrados.length])
 
   if (cargando) return <Cargando texto="Cargando juegos…" />
-  if (error) {
-    return (
-      <ErrorCarga
-        mensaje={error}
-        onReintentar={() => setIntento((prev) => prev + 1)}
-      />
-    )
-  }
+  if (error) return <ErrorCarga mensaje={error} onReintentar={reintentar} />
 
   return (
     <>
