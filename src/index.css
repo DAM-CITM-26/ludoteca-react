@@ -338,3 +338,19 @@ main {
 .enlace-btn { text-decoration: none; display: inline-block; }
 .centrado { text-align: center; }
 .cantidad span { min-width: 7ch; }
+
+/* Destacado (Sprint 2): un juego grande, con su descripción */
+.destacado {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: var(--espacio-3);
+  align-items: center;
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  overflow: hidden;
+}
+.destacado .portada { aspect-ratio: auto; height: 100%; min-height: 110px; }
+.destacado-cuerpo { padding: var(--espacio-3) var(--espacio-3) var(--espacio-3) 0; display: flex; flex-direction: column; gap: var(--espacio-1); }
+.destacado-cuerpo p { font-size: 0.9rem; color: var(--color-texto-suave); }
+.destacado-pos { font-size: 0.75rem; font-variant-numeric: tabular-nums; }
