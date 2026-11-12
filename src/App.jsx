@@ -2,6 +2,7 @@
 // La barra de pestañas llega en el Sprint 2, con React Router.
 import Inicio from './pages/Inicio.jsx'
 import AvisoConexion from './components/AvisoConexion.jsx'
+import BotonArriba from './components/BotonArriba.jsx'
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
       <main>
         <Inicio />
       </main>
+      <BotonArriba />
     </>
   )
 }

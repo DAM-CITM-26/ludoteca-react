@@ -364,3 +364,19 @@ main {
   font-size: 0.85rem;
   text-align: center;
 }
+
+/* Botón para volver arriba (Sprint 2): abajo a la derecha, dentro de la columna del móvil */
+.boton-arriba {
+  position: fixed;
+  bottom: var(--espacio-4);
+  right: max(var(--espacio-4), calc((100vw - var(--ancho-movil)) / 2 + var(--espacio-4)));
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  background: var(--color-primario);
+  color: var(--color-sobre-primario);
+  font-size: 1.3rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(31, 36, 33, 0.25);
+}
