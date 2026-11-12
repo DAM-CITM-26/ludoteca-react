@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Carrusel from '../components/Carrusel.jsx'
 import ListaJuegos from '../components/ListaJuegos.jsx'
 import Chips from '../components/Chips.jsx'
@@ -12,6 +12,15 @@ export default function Inicio() {
   const [duracion, setDuracion] = useState('Todas')
   const novedades = JUEGOS.filter((juego) => juego.novedad)
   const filtrados = filtrarPorDuracion(JUEGOS, duracion)
+
+  // P2
+  // Efecto: el título de la pestaña sigue al filtro.
+  // document.title no lo pinta React: se cambia en un efecto.
+  useEffect(() => {
+    const filtro = duracion === 'Todas' ? '' : ` · ${duracion}`
+    document.title = `Ludoteca${filtro} (${filtrados.length})`
+  }, [duracion, filtrados.length])
+
   return (
     <>
       <section className="seccion">
