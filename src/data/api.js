@@ -63,14 +63,3 @@ export async function pedirJuego(id) {
   }
   return aJuego(await respuesta.json())
 }
-
-// Los juegos que contienen el texto en algún campo (la API no distingue
-// acentos)
-export async function buscarJuegos(texto) {
-  const respuesta = await pedir(`/games?limit=100&q=${encodeURIComponent(texto)}`)
-  if (!respuesta.ok) {
-    throw new Error(`La API respondió ${respuesta.status}`)
-  }
-  const datos = await respuesta.json()
-  return datos.results.map(aJuego)
-}
