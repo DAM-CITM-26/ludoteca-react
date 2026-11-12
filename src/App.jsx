@@ -4,6 +4,7 @@ import Inicio from './pages/Inicio.jsx'
 import Catalogo from './pages/Catalogo.jsx'
 import Juego from './pages/Juego.jsx'
 import NoEncontrada from './pages/NoEncontrada.jsx'
+import LudotecaProvider from './context/LudotecaProvider.jsx'
 import { useJuegos } from './hooks/useJuegos.js'
 
 // App carga los juegos una sola vez y decide qué pantalla va en cada
@@ -15,22 +16,26 @@ export default function App() {
   // sola línea
   const { juegos, cargando, error, reintentar } = useJuegos()
 
+  // LudotecaProvider envuelve las rutas: todas las pantallas leen
+  // «Mi ludoteca» con useContext, sin pasarla por props
   return (
-    <Routes>
-      <Route
-        element={
-          <Layout
-            cargando={cargando}
-            error={error}
-            onReintentar={reintentar}
-          />
-        }
-      >
-        <Route index element={<Inicio juegos={juegos} />} />
-        <Route path="catalogo" element={<Catalogo juegos={juegos} />} />
-        <Route path="juego/:id" element={<Juego />} />
-        <Route path="*" element={<NoEncontrada />} />
-      </Route>
-    </Routes>
+    <LudotecaProvider>
+      <Routes>
+        <Route
+          element={
+            <Layout
+              cargando={cargando}
+              error={error}
+              onReintentar={reintentar}
+            />
+          }
+        >
+          <Route index element={<Inicio juegos={juegos} />} />
+          <Route path="catalogo" element={<Catalogo juegos={juegos} />} />
+          <Route path="juego/:id" element={<Juego />} />
+          <Route path="*" element={<NoEncontrada />} />
+        </Route>
+      </Routes>
+    </LudotecaProvider>
   )
 }
