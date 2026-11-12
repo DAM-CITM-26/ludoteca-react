@@ -3,6 +3,7 @@ import Layout from './components/Layout.jsx'
 import Inicio from './pages/Inicio.jsx'
 import Catalogo from './pages/Catalogo.jsx'
 import Juego from './pages/Juego.jsx'
+import NoEncontrada from './pages/NoEncontrada.jsx'
 import { useJuegos } from './hooks/useJuegos.js'
 
 // App carga los juegos una sola vez y decide qué pantalla va en cada
@@ -28,6 +29,7 @@ export default function App() {
         <Route index element={<Inicio juegos={juegos} />} />
         <Route path="catalogo" element={<Catalogo juegos={juegos} />} />
         <Route path="juego/:id" element={<Juego />} />
+        <Route path="*" element={<NoEncontrada />} />
       </Route>
     </Routes>
   )
