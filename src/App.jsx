@@ -1,20 +1,32 @@
-// La cabecera de la referencia (index.html) y, debajo, la pantalla.
-// La barra de pestañas llega en el Sprint 2, con React Router.
+import { Route, Routes } from 'react-router'
+import Layout from './components/Layout.jsx'
 import Inicio from './pages/Inicio.jsx'
-import AvisoConexion from './components/AvisoConexion.jsx'
-import BotonArriba from './components/BotonArriba.jsx'
+import Catalogo from './pages/Catalogo.jsx'
+import { useJuegos } from './hooks/useJuegos.js'
 
+// App carga los juegos una sola vez y decide qué pantalla va en cada
+// dirección.
+// La carga sube aquí desde Inicio: ahora Inicio y Catálogo usan los
+// mismos juegos.
 export default function App() {
+  // La carga, con el mismo custom hook que usaba Inicio: sube con una
+  // sola línea
+  const { juegos, cargando, error, reintentar } = useJuegos()
+
   return (
-    <>
-      <header className="cabecera">
-        <h1>Ludoteca</h1>
-      </header>
-      <AvisoConexion />
-      <main>
-        <Inicio />
-      </main>
-      <BotonArriba />
-    </>
+    <Routes>
+      <Route
+        element={
+          <Layout
+            cargando={cargando}
+            error={error}
+            onReintentar={reintentar}
+          />
+        }
+      >
+        <Route index element={<Inicio juegos={juegos} />} />
+        <Route path="catalogo" element={<Catalogo juegos={juegos} />} />
+      </Route>
+    </Routes>
   )
 }
