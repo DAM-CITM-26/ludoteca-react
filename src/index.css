@@ -27,6 +27,7 @@
   --espacio-4: 16px;
   --espacio-5: 24px;
   --alto-pestanas: 64px;
+  --ancho-movil: 420px;
 }
 
 * { box-sizing: border-box; }
@@ -37,6 +38,19 @@ body {
   background: var(--color-fondo);
   color: var(--color-texto);
   line-height: 1.45;
+}
+
+/* Formato móvil: la app ocupa como mucho el ancho de un móvil grande (420 px).
+   En el ordenador se ve como un móvil en el centro de la pantalla. */
+#root {
+  max-width: var(--ancho-movil);
+  min-height: 100vh;
+  margin: 0 auto;
+  background: var(--color-fondo);
+}
+@media (min-width: 480px) {
+  body { background: var(--color-borde); }
+  #root { box-shadow: 0 0 0 1px var(--color-borde), 0 8px 32px rgba(31, 36, 33, 0.12); }
 }
 
 h1, h2, h3 { margin: 0; line-height: 1.2; }
@@ -57,8 +71,6 @@ img { max-width: 100%; display: block; }
   justify-content: space-between;
   gap: var(--espacio-3);
   padding: var(--espacio-4);
-  /* en pantallas anchas, alineada con el contenido (máximo 720 px, centrado) */
-  padding-inline: max(var(--espacio-4), calc((100% - 720px) / 2 + var(--espacio-4)));
   background: var(--color-fondo);
   border-bottom: 1px solid var(--color-borde);
 }
@@ -69,8 +81,6 @@ img { max-width: 100%; display: block; }
 main {
   padding: var(--espacio-4);
   padding-bottom: calc(var(--alto-pestanas) + var(--espacio-5));
-  max-width: 720px;
-  margin: 0 auto;
 }
 
 /* Barra de pestañas: siempre abajo (fixed) */
