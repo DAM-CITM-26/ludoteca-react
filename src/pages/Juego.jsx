@@ -6,6 +6,8 @@ import Valoracion from '../components/Valoracion.jsx'
 import EtiquetaDuracion from '../components/EtiquetaDuracion.jsx'
 import Cargando from '../components/Cargando.jsx'
 import ErrorCarga from '../components/ErrorCarga.jsx'
+import { NO_EXISTE } from '../data/api.js'
+import NoEncontrada from './NoEncontrada.jsx'
 import { categorizarDuracion } from '../utils/juegos.js'
 
 // Pantalla: un juego, en /juego/:id (PantallaJuego de la referencia)
@@ -27,6 +29,8 @@ export default function Juego() {
   }, [juego])
 
   if (cargando) return <Cargando texto="Cargando el juego…" />
+  // Un id que no existe no es un error de la API: es «no encontrado»
+  if (error === NO_EXISTE) return <NoEncontrada />
   if (error) return <ErrorCarga mensaje={error} onReintentar={reintentar} />
 
   const { nombre, descripcion, jugadores, autoria, editorial, categoria } = juego

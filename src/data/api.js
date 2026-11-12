@@ -52,11 +52,15 @@ export async function pedirJuegos() {
   return datos.results.map(aJuego)
 }
 
+// El mensaje del 404: la pantalla del juego lo compara para enseñar «no
+// encontrado»
+export const NO_EXISTE = 'ese juego no existe'
+
 // Un juego por su id. Si no existe, la API responde 404.
 export async function pedirJuego(id) {
   const respuesta = await pedir(`/games/${id}`)
   if (respuesta.status === 404) {
-    throw new Error('ese juego no existe')
+    throw new Error(NO_EXISTE)
   }
   if (!respuesta.ok) {
     throw new Error(`La API respondió ${respuesta.status}`)
