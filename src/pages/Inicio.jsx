@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import Carrusel from '../components/Carrusel.jsx'
+import Destacado from '../components/Destacado.jsx'
 import ListaJuegos from '../components/ListaJuegos.jsx'
 import Chips from '../components/Chips.jsx'
 import { JUEGOS } from '../data/juegos.js'
@@ -23,6 +24,10 @@ export default function Inicio() {
 
   return (
     <>
+      <section className="seccion">
+        <h2>Juego del momento</h2>
+        <Destacado juegos={novedades} />
+      </section>
       <section className="seccion">
         <h2>Novedades</h2>
         <Carrusel juegos={novedades} />
