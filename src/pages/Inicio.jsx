@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router'
 import Carrusel from '../components/Carrusel.jsx'
 import Destacado from '../components/Destacado.jsx'
 import ListaJuegos from '../components/ListaJuegos.jsx'
@@ -10,6 +11,7 @@ const DURACIONES = ['Todas', 'Partida rápida', 'Partida media', 'Partida larga'
 // Los juegos llegan por props desde App, que es quien los pide a la API
 export default function Inicio({ juegos }) {
   const [duracion, setDuracion] = useState('Todas')
+  const navigate = useNavigate()
   const novedades = juegos.filter((juego) => juego.novedad)
   const filtrados = filtrarPorDuracion(juegos, duracion)
 
@@ -20,8 +22,17 @@ export default function Inicio({ juegos }) {
     document.title = `Ludoteca${filtro} (${filtrados.length})`
   }, [duracion, filtrados.length])
 
+  // Al pulsar: un juego cualquiera, y a su pantalla
+  function irAUnJuegoAlAzar() {
+    const juego = juegos[Math.floor(Math.random() * juegos.length)]
+    navigate(`/juego/${juego.id}`)
+  }
+
   return (
     <>
+      <button type="button" className="btn" onClick={irAUnJuegoAlAzar}>
+        🎲 Un juego al azar
+      </button>
       <section className="seccion">
         <h2>Juego del momento</h2>
         <Destacado juegos={novedades} />
