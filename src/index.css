@@ -380,3 +380,7 @@ main {
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(31, 36, 33, 0.25);
 }
+
+/* Sprint 2 · la barra de pestañas, dentro de la columna del móvil, y el botón de subir, por encima */
+.pestanas { max-width: var(--ancho-movil); margin: 0 auto; }
+.boton-arriba { bottom: calc(var(--alto-pestanas) + var(--espacio-4)); }

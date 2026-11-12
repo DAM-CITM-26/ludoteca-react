@@ -3,19 +3,13 @@ import Carrusel from '../components/Carrusel.jsx'
 import Destacado from '../components/Destacado.jsx'
 import ListaJuegos from '../components/ListaJuegos.jsx'
 import Chips from '../components/Chips.jsx'
-import Buscador from '../components/Buscador.jsx'
-import Cargando from '../components/Cargando.jsx'
-import ErrorCarga from '../components/ErrorCarga.jsx'
-import { useJuegos } from '../hooks/useJuegos.js'
 import { filtrarPorDuracion } from '../utils/juegos.js'
 
 const DURACIONES = ['Todas', 'Partida rápida', 'Partida media', 'Partida larga']
 
-export default function Inicio() {
-  // La carga, en un custom hook: Inicio solo pinta
-  const { juegos, cargando, error, reintentar } = useJuegos()
+// Los juegos llegan por props desde App, que es quien los pide a la API
+export default function Inicio({ juegos }) {
   const [duracion, setDuracion] = useState('Todas')
-
   const novedades = juegos.filter((juego) => juego.novedad)
   const filtrados = filtrarPorDuracion(juegos, duracion)
 
@@ -26,15 +20,8 @@ export default function Inicio() {
     document.title = `Ludoteca${filtro} (${filtrados.length})`
   }, [duracion, filtrados.length])
 
-  if (cargando) return <Cargando texto="Cargando juegos…" />
-  if (error) return <ErrorCarga mensaje={error} onReintentar={reintentar} />
-
   return (
     <>
-      <section className="seccion">
-        <h2>Buscar</h2>
-        <Buscador />
-      </section>
       <section className="seccion">
         <h2>Juego del momento</h2>
         <Destacado juegos={novedades} />

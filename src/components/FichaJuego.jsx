@@ -1,3 +1,4 @@
+import { Link } from 'react-router'
 import Portada from './Portada.jsx'
 import Valoracion from './Valoracion.jsx'
 import EtiquetaDuracion from './EtiquetaDuracion.jsx'
@@ -5,7 +6,7 @@ import { categorizarDuracion } from '../utils/juegos.js'
 
 export default function FichaJuego({ juego }) {
   return (
-    <article className="card">
+    <Link className="card" to={`/juego/${juego.id}`}>
       <Portada juego={juego} />
       <div className="card-cuerpo">
         <h3>{juego.nombre}</h3>
@@ -15,6 +16,6 @@ export default function FichaJuego({ juego }) {
         </p>
         <EtiquetaDuracion texto={categorizarDuracion(juego.duracion)} />
       </div>
-    </article>
+    </Link>
   )
 }
