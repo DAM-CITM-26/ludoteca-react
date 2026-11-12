@@ -39,3 +39,16 @@ Piezas nuevas que sincronizan la app con algo de fuera de React.
 | `useBusqueda` | `src/hooks/useBusqueda.js` | Custom hook | **Estado:** `resultados`, `cargando`, `error`, `intento`. **Efecto:** `buscarJuegos(texto)` con `[texto, intento]` y la bandera `cancelado`, tras 400 ms sin escribir (debounce) |
 | `useJuegos` | `src/hooks/useJuegos.js` | Custom hook | **Estado:** `juegos`, `cargando`, `error`, `intento`. **Efecto:** `pedirJuegos()` con `[intento]`. Devuelve `{ juegos, cargando, error, reintentar }` |
 | — (en `Inicio`) | `src/pages/Inicio.jsx` | Pantalla | La carga, con `useJuegos()`: Inicio solo pinta |
+
+## Sprint 2 · Clase 21 (las rutas)
+
+| Componente | Fichero | Nivel | Estado, efecto y datos |
+|---|---|---|---|
+| `Layout` | `src/components/Layout.jsx` | Plantilla | Recibe `cargando`, `error` y `onReintentar`; pinta `<Outlet />` |
+| `Pestanas` | `src/components/Pestanas.jsx` | Organismo | `NavLink` con la clase `activa` |
+| `BarraBusqueda` | `src/components/BarraBusqueda.jsx` | Molécula | Controlada: `valor` + `onCambio`. «Borrar» vacía el campo y le devuelve el foco con `useRef` |
+| `Catalogo` | `src/pages/Catalogo.jsx` | Pantalla | Recibe `juegos`. **Estado:** `texto`. **Lógica:** `coincideBusqueda` |
+| `Juego` | `src/pages/Juego.jsx` | Pantalla | `useParams` (`id`) y la carga con `useJuego(id)`. `useRef` para llevar el foco a su nombre. `useNavigate` para «Volver» |
+| `useJuego` | `src/hooks/useJuego.js` | Custom hook | **Estado:** `juego`, `cargando`, `error`, `intento`. **Efecto:** `pedirJuego(id)` con `[id, intento]` |
+| `NoEncontrada` | `src/pages/NoEncontrada.jsx` | Pantalla | `Link` a Inicio |
+| — (en `App`) | `src/App.jsx` | — | La carga de los juegos con `useJuegos()` (subida desde Inicio) y el árbol de rutas (`docs/rutas.md`) |
