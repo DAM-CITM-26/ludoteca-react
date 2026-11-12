@@ -27,8 +27,24 @@ function aJuego(juegoApi) {
   }
 }
 
+// fetch solo falla si no llega a hablar con el servidor (sin conexión,
+// API apagada).
+// Se cambia su mensaje en inglés por uno que entienda quien usa la app.
+// Si en 10 s no llega nada, la petición se da por perdida: sin esto,
+// la pantalla se quedaría en «Cargando…» para siempre.
+async function pedir(ruta) {
+  try {
+    return await fetch(`${BASE}${ruta}`, {
+      signal: AbortSignal.timeout(10000),
+    })
+  } catch (e) {
+    if (e.name === 'TimeoutError') throw new Error('la API tarda demasiado')
+    throw new Error('sin conexión con la API')
+  }
+}
+
 export async function pedirJuegos() {
-  const respuesta = await fetch(`${BASE}/games?limit=100`)
+  const respuesta = await pedir('/games?limit=100')
   if (!respuesta.ok) {
     throw new Error(`La API respondió ${respuesta.status}`)
   }
