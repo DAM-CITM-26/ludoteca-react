@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useContext, useEffect, useRef } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { useJuego } from '../hooks/useJuego.js'
 import Portada from '../components/Portada.jsx'
@@ -8,6 +8,7 @@ import Cargando from '../components/Cargando.jsx'
 import ErrorCarga from '../components/ErrorCarga.jsx'
 import { NO_EXISTE } from '../data/api.js'
 import NoEncontrada from './NoEncontrada.jsx'
+import { LudotecaContext } from '../context/ludoteca-context.js'
 import { categorizarDuracion } from '../utils/juegos.js'
 
 // Pantalla: un juego, en /juego/:id (PantallaJuego de la referencia)
@@ -22,6 +23,8 @@ export default function Juego() {
   // useRef: una caja que guarda el título entre renders, sin volver a
   // pintar. React la rellena al poner ref={titulo} en el h2
   const titulo = useRef(null)
+  // Lo guardado, desde el Context: sin props desde App
+  const { estaGuardado, anadir, quitar } = useContext(LudotecaContext)
 
   // Con <Link> no se carga una página nueva, así que el navegador no
   // mueve el foco: al llegar el juego, se lleva a su nombre (quien usa
@@ -56,6 +59,21 @@ export default function Juego() {
       <p className="card-meta">
         {jugadores} jugadores · {autoria} · Editado por {editorial.nombre} ({editorial.pais})
       </p>
+      <div className="row">
+        {estaGuardado(juego.id) ? (
+          <button
+            type="button"
+            className="btn btn-secundario"
+            onClick={() => quitar(juego.id)}
+          >
+            ✓ En mi ludoteca
+          </button>
+        ) : (
+          <button type="button" className="btn" onClick={() => anadir(juego.id)}>
+            📚 Añadir a mi ludoteca
+          </button>
+        )}
+      </div>
     </article>
   )
 }
