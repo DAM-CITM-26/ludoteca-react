@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import { useJuego } from '../hooks/useJuego.js'
 import Portada from '../components/Portada.jsx'
 import Valoracion from '../components/Valoracion.jsx'
@@ -15,6 +15,8 @@ export default function Juego() {
   // useParams lee la parte variable de la dirección: /juego/7 → { id:
   // '7' }
   const { id } = useParams()
+  // useNavigate da una función para cambiar de pantalla desde el código
+  const navigate = useNavigate()
   // La carga del juego, en un custom hook
   const { juego, cargando, error, reintentar } = useJuego(id)
   // useRef: una caja que guarda el título entre renders, sin volver a
@@ -36,6 +38,9 @@ export default function Juego() {
   const { nombre, descripcion, jugadores, autoria, editorial, categoria } = juego
   return (
     <article className="stack">
+      <button type="button" className="btn btn-secundario" onClick={() => navigate(-1)}>
+        ← Volver
+      </button>
       <div className="card">
         <Portada juego={juego} />
       </div>
