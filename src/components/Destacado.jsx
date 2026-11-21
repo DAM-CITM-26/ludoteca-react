@@ -5,7 +5,6 @@ import Portada from './Portada.jsx'
 // El temporizador está fuera de React:
 // se crea en un efecto y se para en su limpieza.
 export default function Destacado({ juegos }) {
-  // P4
   const [indice, setIndice] = useState(0)
 
   useEffect(() => {

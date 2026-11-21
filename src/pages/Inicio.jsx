@@ -14,7 +14,6 @@ export default function Inicio() {
   const novedades = JUEGOS.filter((juego) => juego.novedad)
   const filtrados = filtrarPorDuracion(JUEGOS, duracion)
 
-  // P2
   // Efecto: el título de la pestaña sigue al filtro.
   // document.title no lo pinta React: se cambia en un efecto.
   useEffect(() => {
