@@ -19,11 +19,15 @@ export default function AvisoConexion() {
     }
     window.addEventListener('online', alConectar)
     window.addEventListener('offline', alDesconectar)
+    // Firefox no siempre lanza «online» al quitar el modo Offline de F12:
+    // por si acaso, mientras el aviso está montado, se mira cada 3 segundos.
+    const reloj = setInterval(() => setEnLinea(navigator.onLine), 3000)
     // 3. Limpieza: se quitan los mismos listeners que se añadieron
-    //    (las mismas funciones, no otras escritas igual).
+    //    (las mismas funciones, no otras escritas igual) y se para el reloj.
     return () => {
       window.removeEventListener('online', alConectar)
       window.removeEventListener('offline', alDesconectar)
+      clearInterval(reloj)
     }
   }, [])
 
